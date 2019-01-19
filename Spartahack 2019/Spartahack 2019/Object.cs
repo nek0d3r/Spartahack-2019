@@ -10,13 +10,23 @@ namespace Spartahack_2019
     public class Object
     {
         private Rectangle bounds;
+        private Skin skin;
+
         public Object()
-            {
-            }
+        {
+            skin = new Skin();
+        }
+
         public Rectangle Bounds
         {
             get { return bounds; }
-            set { Bounds = value; }
+            set { bounds = value; }
+        }
+
+        public Skin Sprite
+        {
+            get { return skin; }
+            set { skin = value; }
         }
     }
 }
