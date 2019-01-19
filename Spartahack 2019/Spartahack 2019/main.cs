@@ -7,12 +7,14 @@ namespace Spartahack_2019
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class main : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+		Texture2D pic;
+		Rectangle rect;
 
-        public Game1()
+		public main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -39,9 +41,10 @@ namespace Spartahack_2019
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-        }
+			pic = Content.Load<Texture2D>("slapdash");
+			rect = new Rectangle(0, 0, pic.Width, pic.Height);
+			// TODO: use this.Content to load your game content here
+		}
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -61,10 +64,13 @@ namespace Spartahack_2019
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+			rect.X++;
 
-            // TODO: Add your update logic here
 
-            base.Update(gameTime);
+
+			// TODO: Add your update logic here
+
+			base.Update(gameTime);
         }
 
         /// <summary>
@@ -73,11 +79,15 @@ namespace Spartahack_2019
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+			spriteBatch.Begin();
+			spriteBatch.Draw(pic, rect, Color.White);
+			spriteBatch.End();
 
-            base.Draw(gameTime);
+			// TODO: Add your drawing code here
+
+			base.Draw(gameTime);
         }
     }
 }
