@@ -14,7 +14,7 @@ namespace Spartahack_2019
         [STAThread]
         static void Main()
         {
-            using (var game = new main())
+            using (var game = new Main())
                 game.Run();
         }
     }
