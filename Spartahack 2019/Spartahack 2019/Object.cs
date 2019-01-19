@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Spartahack_2019
 {
-    class Class1
+    class Object
     {
     }
 }
