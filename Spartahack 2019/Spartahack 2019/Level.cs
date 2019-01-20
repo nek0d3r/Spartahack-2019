@@ -12,14 +12,17 @@ namespace Spartahack_2019
     {
         private Texture2D sprSheet;
         private Player player;
+        private Object floor;
 
         public Level(Texture2D spriteSheet)
         {
             sprSheet = spriteSheet;
-            player = new Player();
-            player.Bounds = new Rectangle(0, 0, Globals.SPR_DIMS.X, Globals.SPR_DIMS.Y);
+
+            player = new Player(new Rectangle(0, 0, Globals.SPR_DIMS.X, Globals.SPR_DIMS.Y));
             player.Sprite.Source = new Rectangle(new Point(0 * Globals.SPR_DIMS.X, 0 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
-            player.Sprite.SpriteSheet = spriteSheet;
+
+            floor = new Object(new Rectangle(0, (Globals.TILE_DIMS.Y - 1) * Globals.SPR_DIMS.Y, Globals.SPR_DIMS.X * Globals.TILE_DIMS.X, Globals.SPR_DIMS.Y));
+            floor.Sprite.Source = new Rectangle(new Point(1 * Globals.SPR_DIMS.X, 3 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
         }
 
         public void Update(GameTime gameTime)
@@ -30,7 +33,9 @@ namespace Spartahack_2019
         public void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D render)
         {
             graphicsDevice.SetRenderTarget(render);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
+
+            spriteBatch.Draw(sprSheet, floor.Bounds, floor.Sprite.Source, Color.White);
 
             spriteBatch.Draw(sprSheet, player.Bounds, player.Sprite.Source, Color.White);
 

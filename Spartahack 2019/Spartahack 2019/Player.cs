@@ -9,8 +9,7 @@ namespace Spartahack_2019
 {
     public class Player : Object
     {
-        
-        public Player()
+        public Player(Rectangle boundingBox) : base(boundingBox)
         {
         }
 
