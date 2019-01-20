@@ -30,12 +30,13 @@ namespace Spartahack_2019
             player.Update(gameTime);
         }
 
-        public void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D render)
+        public void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D render, SpriteFont font)
         {
             graphicsDevice.SetRenderTarget(render);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
 
             spriteBatch.Draw(sprSheet, floor.Bounds, floor.Sprite.Source, Color.White);
+            spriteBatch.DrawString(font, player.velocity.ToString() + "\n" + player.acceleration.ToString(), new Vector2(0, 1), Color.Red);
 
             spriteBatch.Draw(sprSheet, player.Bounds, player.Sprite.Source, Color.White);
 
