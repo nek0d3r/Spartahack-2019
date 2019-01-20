@@ -11,9 +11,13 @@ namespace Spartahack_2019
 
     {
         public Vector2 acceleration;
+        public Vector2 friction;
         public Vector2 velocity = Vector2.Zero;
-        public Vector2 direction;
-        float accelRate = 0.2f;
+        public Vector2 direction = Vector2.Zero;
+        float accelRate = 50.0f;
+        float maxVelocity = 3.0f;
+        float frictionRate = 10.0f;
+        float maxFrictionVelocity = 3.0f;
 
         public Player(Rectangle boundingBox) : base(boundingBox)
         {
@@ -26,19 +30,30 @@ namespace Spartahack_2019
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.Right))
-                direction = new Vector2(2, 0);
+                direction.X = 1;
 
             if (state.IsKeyDown(Keys.Left))
-                direction = new Vector2(-2, 0);
+                direction.X = -1;
 
             if (state.IsKeyDown(Keys.Space))
-                direction = new Vector2(0, -5);
+                direction.Y = -5;
 
             float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             acceleration = accelRate * direction;
             velocity += acceleration * time;
 
-            if (direction >= (0, -5))
+            if (velocity.X > 0)
+                friction.X = -frictionRate;
+            if (velocity.X < 0)
+                friction.X = frictionRate;
+
+            if (velocity.X > maxVelocity)
+                velocity.X = maxVelocity;
+            if (velocity.X < -maxVelocity)
+                velocity.X = -maxVelocity;
+
+            velocity += friction * time;
 
             bounds.Offset(velocity);
 
