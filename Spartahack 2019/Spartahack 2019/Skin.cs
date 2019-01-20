@@ -10,17 +10,10 @@ namespace Spartahack_2019
 {
     public class Skin
     {
-        private Texture2D spriteSheet;
         private Rectangle source;
 
         public Skin()
         {
-        }
-
-        public Texture2D SpriteSheet
-        {
-            get { return spriteSheet; }
-            set { spriteSheet = value; }
         }
 
         public Rectangle Source

@@ -7,8 +7,10 @@ namespace Spartahack_2019
     public static class Globals
     {
         public static readonly Point SPR_DIMS = new Point(16, 16);
-        public static readonly Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
         public static readonly Point TILE_DIMS = new Point(10, 10);
+        public static readonly Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
+
+        public static Rectangle renderDims = new Rectangle(Point.Zero, DEFAULT_WINDOW_SIZE);
     }
 
     public class Main : Game
@@ -18,7 +20,6 @@ namespace Spartahack_2019
         RenderTarget2D render;
 
         Texture2D sprSheet;
-        Rectangle renderDims;
 
         Level level;
 
@@ -34,7 +35,6 @@ namespace Spartahack_2019
         
         protected override void Initialize()
         {
-            renderDims = Rectangle.Empty;
             base.Initialize();
         }
         
@@ -57,11 +57,11 @@ namespace Spartahack_2019
                 Exit();
 
             if (graphics.PreferredBackBufferWidth > graphics.PreferredBackBufferHeight)
-                renderDims = new Rectangle(graphics.PreferredBackBufferWidth / 2 - graphics.PreferredBackBufferHeight / 2, 0, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferHeight);
+                Globals.renderDims = new Rectangle(graphics.PreferredBackBufferWidth / 2 - graphics.PreferredBackBufferHeight / 2, 0, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferHeight);
             else if (graphics.PreferredBackBufferHeight > graphics.PreferredBackBufferWidth)
-                renderDims = new Rectangle(0, graphics.PreferredBackBufferHeight / 2 - graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferWidth);
+                Globals.renderDims = new Rectangle(0, graphics.PreferredBackBufferHeight / 2 - graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferWidth);
             else
-                renderDims = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+                Globals.renderDims = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
             level.Update(gameTime);
 
@@ -78,7 +78,7 @@ namespace Spartahack_2019
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
-            spriteBatch.Draw((Texture2D)render, renderDims, Color.White);
+            spriteBatch.Draw((Texture2D)render, Globals.renderDims, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
