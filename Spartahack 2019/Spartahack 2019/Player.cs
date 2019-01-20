@@ -17,7 +17,8 @@ namespace Spartahack_2019
         float accelRate = 50.0f;
         float maxVelocity = 3.0f;
         float frictionRate = 10.0f;
-        float maxFrictionVelocity = 3.0f;
+        float gravity = 0.0f;
+        float initialJumpVelocity = 100.0f;
 
         public Player(Rectangle boundingBox) : base(boundingBox)
         {
@@ -36,12 +37,16 @@ namespace Spartahack_2019
                 direction.X = -1;
 
             if (state.IsKeyDown(Keys.Space))
-                direction.Y = -5;
+            {
+                direction.Y = -1;
+                gravity = 15.0f;
+            }
 
             float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            acceleration = accelRate * direction;
-            velocity += acceleration * time;
+            acceleration.X = accelRate * direction.X;
+            velocity.X += acceleration.X * time;
+            velocity.Y += direction.Y * initialJumpVelocity * time;
 
             if (velocity.X > 0)
                 friction.X = -frictionRate;
@@ -53,7 +58,8 @@ namespace Spartahack_2019
             if (velocity.X < -maxVelocity)
                 velocity.X = -maxVelocity;
 
-            velocity += friction * time;
+            velocity.X += friction.X * time;
+            velocity.Y += gravity * time;
 
             bounds.Offset(velocity);
 
