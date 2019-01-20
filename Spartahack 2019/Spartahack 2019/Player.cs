@@ -18,6 +18,7 @@ namespace Spartahack_2019
         float maxVelocity = 3.0f;
         float frictionRate = 10.0f;
         float maxFrictionVelocity = 3.0f;
+       
 
         public Player(Rectangle boundingBox) : base(boundingBox)
         {
@@ -52,6 +53,8 @@ namespace Spartahack_2019
                 velocity.X = maxVelocity;
             if (velocity.X < -maxVelocity)
                 velocity.X = -maxVelocity;
+            if (direction.Y >= -5)
+                direction.Y = direction.Y+1;
 
             velocity += friction * time;
 
