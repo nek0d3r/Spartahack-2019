@@ -9,7 +9,7 @@ namespace Spartahack_2019
 {
     public class Object
     {
-        private Rectangle bounds;
+        protected Rectangle bounds;
         private Skin skin;
 
         public Object()

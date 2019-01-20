@@ -24,6 +24,7 @@ namespace Spartahack_2019
 
         public void Update(GameTime gameTime)
         {
+            player.Update(gameTime);
         }
 
         public void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D render)
