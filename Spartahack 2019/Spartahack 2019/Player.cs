@@ -10,9 +10,10 @@ namespace Spartahack_2019
     public class Player : Object
 
     {
-        Vector2 acceleration;
-        Vector2 velocity = Vector2.Zero;
-        float accelRate = .3f;
+        public Vector2 acceleration;
+        public Vector2 velocity = Vector2.Zero;
+        public Vector2 direction;
+        float accelRate = 0.2f;
 
         public Player(Rectangle boundingBox) : base(boundingBox)
         {
@@ -20,8 +21,7 @@ namespace Spartahack_2019
 
         public void Update(GameTime gameTime)
         {
-
-            Vector2 direction = Vector2.Zero;
+            direction = Vector2.Zero;
 
             KeyboardState state = Keyboard.GetState();
 

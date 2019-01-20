@@ -20,6 +20,7 @@ namespace Spartahack_2019
         RenderTarget2D render;
 
         Texture2D sprSheet;
+        SpriteFont debug;
 
         Level level;
 
@@ -44,6 +45,7 @@ namespace Spartahack_2019
             render = new RenderTarget2D(GraphicsDevice, Globals.SPR_DIMS.X * Globals.TILE_DIMS.X, Globals.SPR_DIMS.Y * Globals.TILE_DIMS.Y);
 
             sprSheet = Content.Load<Texture2D>("spritesheet2");
+            debug = Content.Load<SpriteFont>("debug");
             level = new Level(sprSheet);
         }
 
@@ -73,7 +75,7 @@ namespace Spartahack_2019
             GraphicsDevice.SetRenderTarget(render);
             GraphicsDevice.Clear(Color.Black);
 
-            level.Draw(GraphicsDevice, spriteBatch, render);
+            level.Draw(GraphicsDevice, spriteBatch, render, debug);
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.White);

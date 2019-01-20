@@ -25,3 +25,10 @@
 /processorParam:TextureFormat=Color
 /build:spritesheet2.png
 
+#begin debug.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:debug.spritefont
+
