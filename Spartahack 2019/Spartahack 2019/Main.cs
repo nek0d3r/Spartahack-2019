@@ -7,7 +7,7 @@ namespace Spartahack_2019
     public static class Globals
     {
         public static readonly Point SPR_DIMS = new Point(16, 16);
-        public static readonly Point TILE_DIMS = new Point(10, 10);
+        public static readonly Point TILE_DIMS = new Point(30, 30);
         public static readonly Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
 
         public static Rectangle renderDims = new Rectangle(Point.Zero, DEFAULT_WINDOW_SIZE);
