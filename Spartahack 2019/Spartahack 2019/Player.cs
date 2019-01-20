@@ -28,6 +28,9 @@ namespace Spartahack_2019
             if (state.IsKeyDown(Keys.Left))
                 direction = new Vector2(-1, 0);
 
+            if (state.IsKeyDown(Keys.Space))
+                direction = new Vector2(1, -1);
+
 
             acceleration = direction * accelRate;
             velocity += acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
