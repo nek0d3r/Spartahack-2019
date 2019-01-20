@@ -38,6 +38,8 @@ namespace Spartahack_2019
             acceleration = accelRate * direction;
             velocity += acceleration * time;
 
+            if (direction >= (0, -5))
+
             bounds.Offset(velocity);
 
 
