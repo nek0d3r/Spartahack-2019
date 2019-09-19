@@ -8,11 +8,10 @@ namespace Spartahack_2019
 {
     public static class Globals
     {
-        public static readonly Point SPR_DIMS = new Point(16, 16);
-        public static readonly Point TILE_DIMS = new Point(30, 30);
-        public static Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
-
-        public static Rectangle renderDims = new Rectangle(Point.Zero, DEFAULT_WINDOW_SIZE);
+        public static readonly Point SPR_DIMS = new Point(16, 16);                                  // Set sprite/tile size
+        public static readonly Point TILE_DIMS = new Point(30, 30);                                 // Render size in tiles
+        public static Point DEFAULT_WINDOW_SIZE = new Point(800, 800);                              // Size of buffer
+        public static Rectangle renderDims = new Rectangle(Point.Zero, DEFAULT_WINDOW_SIZE);        // How to apply render to buffer
     }
 
     public class Main : Game
@@ -31,23 +30,37 @@ namespace Spartahack_2019
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Window.AllowUserResizing = true;
+
             this.IsMouseVisible = true;
+
+            // Set buffer size to default
             graphics.PreferredBackBufferWidth = Globals.DEFAULT_WINDOW_SIZE.X;
             graphics.PreferredBackBufferHeight = Globals.DEFAULT_WINDOW_SIZE.Y;
+
+            // Allow user to resize window, add event handler
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += WindowChanged;
         }
 
+
+        /***
+         * Thrown on resizing the window.
+         * Attempts to fill the buffer while maintaining aspect ratio.
+         * TODO: Handling window maximizing. Currently the last buffer dimensions are stretched to fit the window, but doesn't update to fill or fit properly.
+         */
         public void WindowChanged(object sender, EventArgs e)
         {
+            // Update buffer bounds
             Globals.DEFAULT_WINDOW_SIZE.X = graphics.PreferredBackBufferWidth;
             Globals.DEFAULT_WINDOW_SIZE.Y = graphics.PreferredBackBufferHeight;
 
+            // If width is greater, fill to height
             if (Globals.DEFAULT_WINDOW_SIZE.X > Globals.DEFAULT_WINDOW_SIZE.Y)
                 Globals.renderDims = new Rectangle(Globals.DEFAULT_WINDOW_SIZE.X / 2 - Globals.DEFAULT_WINDOW_SIZE.Y / 2, 0, Globals.DEFAULT_WINDOW_SIZE.Y, Globals.DEFAULT_WINDOW_SIZE.Y);
+            // If height is greater, fill to width
             else if (Globals.DEFAULT_WINDOW_SIZE.Y > Globals.DEFAULT_WINDOW_SIZE.X)
                 Globals.renderDims = new Rectangle(0, Globals.DEFAULT_WINDOW_SIZE.Y / 2 - Globals.DEFAULT_WINDOW_SIZE.X / 2, Globals.DEFAULT_WINDOW_SIZE.X, Globals.DEFAULT_WINDOW_SIZE.X);
+            // Buffer is square, fill to bounds
             else
                 Globals.renderDims = new Rectangle(0, 0, Globals.DEFAULT_WINDOW_SIZE.X, Globals.DEFAULT_WINDOW_SIZE.Y);
         }
