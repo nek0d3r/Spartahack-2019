@@ -36,7 +36,7 @@ namespace Spartahack_2019
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
 
             spriteBatch.Draw(sprSheet, floor.Bounds, floor.Sprite.Source, Color.White);
-            spriteBatch.DrawString(font, player.velocity.ToString() + "\n" + player.acceleration.ToString() + "\n" + player.friction.ToString() + "\n" + player.Bounds.ToString() + "\n" + (player.Bounds.Y > Globals.TILE_DIMS.Y * Globals.SPR_DIMS.Y - player.Bounds.Height).ToString(), new Vector2(0, 1), Color.Red);
+            spriteBatch.DrawString(font, "Velocity: " + player.velocity.ToString() + "\nAcceleration:" + player.acceleration.ToString() + "\nFriction" + player.friction.ToString() + "\nBounds" + player.Bounds.ToString() + "\n" + (player.Bounds.Y > Globals.TILE_DIMS.Y * Globals.SPR_DIMS.Y - player.Bounds.Height).ToString(), new Vector2(0, 1), Color.Red);
 
             spriteBatch.Draw(sprSheet, player.Bounds, player.Sprite.Source, Color.White);
 

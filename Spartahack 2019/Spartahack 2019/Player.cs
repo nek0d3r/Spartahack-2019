@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
@@ -16,12 +13,12 @@ namespace Spartahack_2019
         public Vector2 friction;
         public Vector2 velocity = Vector2.Zero;
         public Vector2 direction = Vector2.Zero;
-        float accelRate = 50.0f;
+        float horizAccelRate = 25.0f;
         float maxVelocity = 3.0f;
         float frictionRate = 10.0f;
         float gravity = 0.0f;
         float maxGravity = 5.0f;
-        float initialJumpVelocity = 100.0f;
+        float initialJumpVelocity = 500.0f;
 
         public Player(Rectangle boundingBox) : base(boundingBox)
         {
@@ -29,6 +26,8 @@ namespace Spartahack_2019
 
         public void Update(GameTime gameTime)
         {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             prevState = state;
 
             direction = Vector2.Zero;
@@ -47,11 +46,9 @@ namespace Spartahack_2019
                 gravity = 15.0f;
             }
 
-            float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            acceleration.X = accelRate * direction.X;
-            velocity.X += acceleration.X * time;
-            velocity.Y += direction.Y * initialJumpVelocity * time;
+            acceleration.X = horizAccelRate * direction.X;
+            velocity.X += acceleration.X * delta;
+            velocity.Y += direction.Y * initialJumpVelocity * delta;
 
             if (velocity.X > 0)
                 friction.X = -frictionRate;
@@ -65,8 +62,8 @@ namespace Spartahack_2019
             if (direction.Y >= -5)
                 direction.Y = direction.Y+1;
 
-            velocity.X += friction.X * time;
-            velocity.Y += gravity * time;
+            velocity.X += (Math.Abs(friction.X * delta) > Math.Abs(velocity.X)) ? -velocity.X : friction.X * delta;
+            velocity.Y += gravity * delta;
             if (velocity.Y > maxGravity)
                 velocity.Y = maxGravity;
 
