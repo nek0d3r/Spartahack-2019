@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\spritesheet2.png" />
+    <Content Include="Content\theme.mp3" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

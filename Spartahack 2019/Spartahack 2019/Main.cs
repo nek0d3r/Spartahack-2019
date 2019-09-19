@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Spartahack_2019
 {
@@ -8,7 +10,7 @@ namespace Spartahack_2019
     {
         public static readonly Point SPR_DIMS = new Point(16, 16);
         public static readonly Point TILE_DIMS = new Point(30, 30);
-        public static readonly Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
+        public static Point DEFAULT_WINDOW_SIZE = new Point(800, 800);
 
         public static Rectangle renderDims = new Rectangle(Point.Zero, DEFAULT_WINDOW_SIZE);
     }
@@ -19,6 +21,7 @@ namespace Spartahack_2019
         SpriteBatch spriteBatch;
         RenderTarget2D render;
 
+        Song theme;
         Texture2D sprSheet;
         SpriteFont debug;
 
@@ -32,6 +35,21 @@ namespace Spartahack_2019
             this.IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = Globals.DEFAULT_WINDOW_SIZE.X;
             graphics.PreferredBackBufferHeight = Globals.DEFAULT_WINDOW_SIZE.Y;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += WindowChanged;
+        }
+
+        public void WindowChanged(object sender, EventArgs e)
+        {
+            Globals.DEFAULT_WINDOW_SIZE.X = graphics.PreferredBackBufferWidth;
+            Globals.DEFAULT_WINDOW_SIZE.Y = graphics.PreferredBackBufferHeight;
+
+            if (Globals.DEFAULT_WINDOW_SIZE.X > Globals.DEFAULT_WINDOW_SIZE.Y)
+                Globals.renderDims = new Rectangle(Globals.DEFAULT_WINDOW_SIZE.X / 2 - Globals.DEFAULT_WINDOW_SIZE.Y / 2, 0, Globals.DEFAULT_WINDOW_SIZE.Y, Globals.DEFAULT_WINDOW_SIZE.Y);
+            else if (Globals.DEFAULT_WINDOW_SIZE.Y > Globals.DEFAULT_WINDOW_SIZE.X)
+                Globals.renderDims = new Rectangle(0, Globals.DEFAULT_WINDOW_SIZE.Y / 2 - Globals.DEFAULT_WINDOW_SIZE.X / 2, Globals.DEFAULT_WINDOW_SIZE.X, Globals.DEFAULT_WINDOW_SIZE.X);
+            else
+                Globals.renderDims = new Rectangle(0, 0, Globals.DEFAULT_WINDOW_SIZE.X, Globals.DEFAULT_WINDOW_SIZE.Y);
         }
         
         protected override void Initialize()
@@ -44,9 +62,12 @@ namespace Spartahack_2019
             spriteBatch = new SpriteBatch(GraphicsDevice);
             render = new RenderTarget2D(GraphicsDevice, Globals.SPR_DIMS.X * Globals.TILE_DIMS.X, Globals.SPR_DIMS.Y * Globals.TILE_DIMS.Y);
 
+            theme = Content.Load<Song>("theme");
             sprSheet = Content.Load<Texture2D>("spritesheet2");
             debug = Content.Load<SpriteFont>("debug");
             level = new Level(sprSheet);
+            MediaPlayer.Play(theme);
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void UnloadContent()
@@ -57,13 +78,6 @@ namespace Spartahack_2019
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            if (graphics.PreferredBackBufferWidth > graphics.PreferredBackBufferHeight)
-                Globals.renderDims = new Rectangle(graphics.PreferredBackBufferWidth / 2 - graphics.PreferredBackBufferHeight / 2, 0, graphics.PreferredBackBufferHeight, graphics.PreferredBackBufferHeight);
-            else if (graphics.PreferredBackBufferHeight > graphics.PreferredBackBufferWidth)
-                Globals.renderDims = new Rectangle(0, graphics.PreferredBackBufferHeight / 2 - graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferWidth);
-            else
-                Globals.renderDims = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
             level.Update(gameTime);
 
