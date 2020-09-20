@@ -51,8 +51,8 @@ namespace Spartahack_2019
         public void WindowChanged(object sender, EventArgs e)
         {
             // Update buffer bounds
-            Globals.DEFAULT_WINDOW_SIZE.X = graphics.PreferredBackBufferWidth;
-            Globals.DEFAULT_WINDOW_SIZE.Y = graphics.PreferredBackBufferHeight;
+            Globals.DEFAULT_WINDOW_SIZE.X = Window.ClientBounds.Width;
+            Globals.DEFAULT_WINDOW_SIZE.Y = Window.ClientBounds.Height;
 
             // If width is greater, fill to height
             if (Globals.DEFAULT_WINDOW_SIZE.X > Globals.DEFAULT_WINDOW_SIZE.Y)
