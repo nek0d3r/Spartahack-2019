@@ -79,7 +79,7 @@ namespace Spartahack_2019
             sprSheet = Content.Load<Texture2D>("spritesheet2");
             debug = Content.Load<SpriteFont>("debug");
             level = new Level(sprSheet);
-            MediaPlayer.Play(theme);
+            //MediaPlayer.Play(theme);
             MediaPlayer.IsRepeating = true;
         }
 

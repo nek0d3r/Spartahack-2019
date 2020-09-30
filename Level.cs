@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Spartahack_2019
@@ -19,10 +14,10 @@ namespace Spartahack_2019
             sprSheet = spriteSheet;
 
             player = new Player(new Rectangle(0, 0, Globals.SPR_DIMS.X, Globals.SPR_DIMS.Y));
-            player.Sprite.Source = new Rectangle(new Point(0 * Globals.SPR_DIMS.X, 0 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
+            player.SourceBounds = new Rectangle(new Point(0 * Globals.SPR_DIMS.X, 0 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
 
             floor = new Object(new Rectangle(0, (Globals.TILE_DIMS.Y - 1) * Globals.SPR_DIMS.Y, Globals.SPR_DIMS.X * Globals.TILE_DIMS.X, Globals.SPR_DIMS.Y));
-            floor.Sprite.Source = new Rectangle(new Point(1 * Globals.SPR_DIMS.X, 3 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
+            floor.SourceBounds = new Rectangle(new Point(1 * Globals.SPR_DIMS.X, 3 * Globals.SPR_DIMS.Y), Globals.SPR_DIMS);
         }
 
         public void Update(GameTime gameTime)
@@ -35,19 +30,19 @@ namespace Spartahack_2019
             graphicsDevice.SetRenderTarget(render);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp);
 
-            spriteBatch.Draw(sprSheet, floor.Bounds, floor.Sprite.Source, Color.White);
+            spriteBatch.Draw(sprSheet, floor.Bounds, floor.SourceBounds, Color.White);
             spriteBatch.DrawString(
-                font,
-                $"Velocity: {player.velocity}\n" +
+                font,$"{player.position}"
+                /*$"Velocity: {player.velocity}\n" +
                     $"Acceleration: {player.acceleration}\n" +
                     $"Friction: {player.friction}\n" +
                     $"Bounds: {player.Bounds}\n" + 
-                    $"{player.Bounds.Y > Globals.TILE_DIMS.Y * Globals.SPR_DIMS.Y - player.Bounds.Height}",
+                    $"{player.Bounds.Y > Globals.TILE_DIMS.Y * Globals.SPR_DIMS.Y - player.Bounds.Height}"*/,
                 new Vector2(0, 1),
                 Color.Red
             );
 
-            spriteBatch.Draw(sprSheet, player.Bounds, player.Sprite.Source, Color.White);
+            spriteBatch.Draw(sprSheet, player.Bounds, player.SourceBounds, Color.White);
 
             spriteBatch.End();
         }
